@@ -100,3 +100,17 @@ public class Main {
     }
 
 }
+
+class A {
+    public static void main(String[] args) {
+        Server.sever();
+    }
+}
+
+
+class B {
+    public static void main(String[] args) {
+        Server.client();
+
+    }
+}
