@@ -83,3 +83,16 @@ public class Server {
 
 
 }
+
+class A1 {
+    public static void main(String[] args) {
+        Server.sever();
+    }
+}
+
+
+class B2 {
+    public static void main(String[] args) {
+        Server.client();
+    }
+}

@@ -6,46 +6,68 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Server2 {
-    public static void Server () throws IOException {
-        ServerSocket serverSocket = new ServerSocket(3000);
-        while (true) {
-            Socket client = serverSocket.accept();
-            OutputStream sendToClient = client.getOutputStream();
-            InputStream fromClient = client.getInputStream();
-            Scanner scanner = new Scanner(fromClient);
-            sendToClient.write("Server: chào b".getBytes());
-            System.out.println(fromClient);
-            while (scanner.hasNextLine()) {
-                String clientMessage = scanner.nextLine();
-                System.out.println("Như Anh : " + clientMessage);
+    public static void Server() throws IOException {
+        ServerSocket serverSocket = new ServerSocket(3001);
+        Socket client = serverSocket.accept();
+        InputStream fromClient = client.getInputStream();
+        OutputStream toClient = client.getOutputStream();
+
+        // C: client
+        // Nhan tin nhan ben C: fromClient
+        // In ra tin nhan da nhan tu C: sout
+        new Thread(() -> {
+            Scanner messFromClient = new Scanner(fromClient);
+            while (messFromClient.hasNextLine()) {
+                System.out.println("C02: " + messFromClient.nextLine());
             }
-            sendToClient.flush();
+        }).start();
+
+        // Nhap tin nhan ben S: scanner
+        // Gui sang ben C: toClient
+        Scanner inputS = new Scanner(System.in);
+        while (true) {
+            String inp = inputS.nextLine();
+            toClient.write(inp.getBytes());
+            toClient.flush();
         }
+
+
     }
-    public static void Client () throws IOException {
-        Socket server  = new Socket("localhost", 3000);
-        while (true) {
-            OutputStream sendToServer = server.getOutputStream();
-            InputStream fromServer = server.getInputStream();
-            Scanner scanner = new Scanner(fromServer);
-            sendToServer.write("Client: chào b".getBytes());
-            System.out.println(scanner.nextLine());
-            while (scanner.hasNextLine()) {
-                String clientMessage = scanner.nextLine();
-                System.out.println("Như Anh : " + clientMessage);
+
+    public static void Client() throws IOException {
+        Socket server = new Socket("localhost", 3001);
+        InputStream fromServer = server.getInputStream();
+        OutputStream toServer = server.getOutputStream();
+        // S: server
+        // Nhan tin nhan ben S: fromServer
+        // In ra tin nhan da nhan tu S: sout
+        new Thread(() -> {
+            Scanner messFromClient = new Scanner(fromServer);
+            while (messFromClient.hasNextLine()) {
+                System.out.println("NA: " + messFromClient.nextLine());
             }
-            sendToServer.flush();
+        }).start();
+        // Nhap tin nhan ben C: scanner
+        // Gui sang ben S: toServer
+
+        Scanner inputC = new Scanner(System.in);
+        while (true) {
+            String inp = inputC.nextLine();
+            toServer.write(inp.getBytes());
+            toServer.flush();
         }
+
     }
 
 }
 
-class AA {
+class A4 {
     public static void main(String[] args) throws IOException {
         Server2.Server();
     }
 }
-class BB {
+
+class B4 {
     public static void main(String[] args) throws IOException {
         Server2.Client();
     }

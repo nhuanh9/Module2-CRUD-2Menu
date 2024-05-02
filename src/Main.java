@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -101,16 +102,14 @@ public class Main {
 
 }
 
-class A {
-    public static void main(String[] args) {
-        Server.sever();
+class AA {
+    public static void main(String[] args) throws IOException {
+        Server2.Server();
     }
 }
 
-
-class B {
-    public static void main(String[] args) {
-        Server.client();
-
+class BB {
+    public static void main(String[] args) throws IOException {
+        Server2.Client();
     }
 }
