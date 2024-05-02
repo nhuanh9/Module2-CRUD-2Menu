@@ -27,7 +27,7 @@ public class Server2 {
         Scanner inputS = new Scanner(System.in);
         while (true) {
             String inp = inputS.nextLine();
-            toClient.write(inp.getBytes());
+            toClient.write((inp+"\n").getBytes());
             toClient.flush();
         }
 
@@ -49,11 +49,10 @@ public class Server2 {
         }).start();
         // Nhap tin nhan ben C: scanner
         // Gui sang ben S: toServer
-
         Scanner inputC = new Scanner(System.in);
         while (true) {
             String inp = inputC.nextLine();
-            toServer.write(inp.getBytes());
+            toServer.write((inp+"\n").getBytes());
             toServer.flush();
         }
 
